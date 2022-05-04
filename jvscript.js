@@ -24,6 +24,8 @@ function addContact(event) {
       nrTelefon: nrTelefon,
     };
   }
+  document.querySelector('[name="nume"]').value = "";
+  document.querySelector('[name="nrTelefon"]').value = "";
   draw();
 }
 
@@ -47,7 +49,8 @@ function draw() {
     }
   } else {
     document.querySelector("#idTable").classList.add("showTableHead");
-    return}
+    return;
+  }
 }
 // functia de editare
 function editContact(idx) {
