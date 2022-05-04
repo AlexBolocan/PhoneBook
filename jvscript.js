@@ -11,8 +11,8 @@ function addContact(event) {
   event.preventDefault();
   let nume = document.querySelector('[name="nume"]').value.trim();
   let nrTelefon = document.querySelector('[name="nrTelefon"]').value.trim();
-  console.log(nume);
-  console.log(nrTelefon);
+  //console.log(nume);
+  //console.log(nrTelefon);
   if (state.idxEdit === null) {
     state.list.push({
       nume: nume,
