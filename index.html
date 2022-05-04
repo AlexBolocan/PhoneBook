@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="jvscript.js"></script>
+  </head>
+  <body id="bodyStyle" onload="draw()">
+    <div class="agendaTitle "><b>Agenda</b></div>
+    <form onsubmit="addContact(event)" id="idForm" class="formStyle">
+      <div>
+        <span class="fontSize">Nume: </span>
+        <input style="height: 15px" type="text" title="Nume" name="nume" placeholder="nume"/>
+        <span class="fontSize">Telefon: </span>
+        <input style="height: 15px" type="number" title="Telefon" name="nrTelefon" placeholder="Telefon"/>
+      </div>
+      <div>
+        <input type="submit" class="buttonAddStyle fontSize" value="ADAUGA CONTACT"/>
+      </div>
+    </form>
+    <table  id="idTable" class="formStyle showTableHead" >
+      <thead >
+        <tr class="">
+          <td style="width: 40%; height: 20px;" class="fontSize"> <b>Nume</b></td>
+          <td style="width: 40%;" class="fontSize"><b>Telefon</b></td>
+        </tr>
+        <tbody >
+        </tbody>
+      </thead>
+    </table>
+  </body>
+</html>

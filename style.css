@@ -1,0 +1,36 @@
+#bodyStyle {
+  background-color: rgb(247, 223, 188);
+}
+.agendaTitle {
+  font-size: 40px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  margin: 30px;
+}
+.formStyle {
+  margin: 1vw 20vw;
+  padding: 30px 30px;
+  text-align: center;
+  font-size: 10px;
+  border-radius: 5px;
+  background-color: rgb(254, 202, 39);
+}
+.buttonAddStyle {
+  color: burlywood;
+  margin-top: 10px;
+  height: 30px;
+  background-color: rgb(83, 83, 177);
+  border-radius: 5px;
+}
+.showTableHead {
+  display: none;
+}
+.buttonContact {
+  color: rgb(254, 0, 0);
+  background: none;
+  border: none;
+  text-decoration: underline;
+}
+.fontSize {
+  font-size: 20px;
+}
