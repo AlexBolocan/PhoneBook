@@ -11,7 +11,7 @@ function addContact(event) {
   event.preventDefault();
   let nume = document.querySelector('[name="nume"]').value.trim();
   let nrTelefon = document.querySelector('[name="nrTelefon"]').value.trim();
-  //console.log(nume);
+  console.log(nume);
   //console.log(nrTelefon);
   if (state.idxEdit === null) {
     state.list.push({
@@ -27,6 +27,7 @@ function addContact(event) {
   document.querySelector('[name="nume"]').value = "";
   document.querySelector('[name="nrTelefon"]').value = "";
   draw();
+  sortAgenda();
 }
 
 // functia de desenare a tabelului
@@ -68,4 +69,18 @@ function deleteContact(idx) {
     state.list.splice(idx, 1);
     draw();
   }
+}
+function sortAgenda() {
+  state.list.sort(function (a, b) {
+    let numeA = a.nume;
+    let numeB = b.nume;
+    numeA = numeA.toLowerCase();
+    numeB = numeB.toLowerCase();
+    if (numeA > numeB) {
+      return 1;
+    } else if (numeA < numeB) {
+      return -1;
+    } else return 0;
+  });
+  draw();
 }
