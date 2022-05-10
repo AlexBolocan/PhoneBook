@@ -22,7 +22,7 @@
   background-color: rgb(83, 83, 177);
   border-radius: 5px;
 }
-.showTableHead {
+.hideTableHead {
   display: none;
 }
 .buttonContact {

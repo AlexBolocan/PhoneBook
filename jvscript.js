@@ -1,9 +1,11 @@
 // variabila de stocat info din aplicatie
 // tip obiect
 let state = {
+  list:[],
+  idxEdit:null,
   // obiect
-  list: [], // array
-  idxEdit: null,
+ dataBaseUrl:
+ "https://phonebook-1fef4-default-rtdb.europe-west1.firebasedatabase.app/",
 };
 
 // functia de adaugare contacte
@@ -33,10 +35,10 @@ function addContact(event) {
 // functia de desenare a tabelului
 function draw() {
   let table = document.querySelector("#idTable tbody");
-  console.log(table);
+  //console.log(table);
   let str = "";
   if (state.list.length > 0) {
-    document.querySelector("#idTable").classList.remove("showTableHead");
+    document.querySelector("#idTable").classList.remove("hideTableHead");
     for (let idx = 0; idx < state.list.length; idx++) {
       // for (let elem of state.list) {
       let elem = state.list[idx];
@@ -49,7 +51,7 @@ function draw() {
       table.innerHTML = str;
     }
   } else {
-    document.querySelector("#idTable").classList.add("showTableHead");
+    document.querySelector("#idTable").classList.add("hideTableHead");
     return;
   }
 }
@@ -82,5 +84,15 @@ function sortAgenda() {
       return -1;
     } else return 0;
   });
+  draw();
+}
+//functie pentru preluare din baza de data
+async function getData() {
+  let url = state.dataBaseUrl + ".json"; // variabila *url* = linku-ul bazei de date din firebase
+  console.log(url)
+  let response = await fetch(url); // variabila *reponse* = cererea catre baza de date
+  let listResDb = await response.json(); // variabila *list* = continut bazei de date
+  console.log(listResDb); //
+  state = listResDb;
   draw();
 }
