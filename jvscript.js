@@ -35,7 +35,7 @@ function addContact(event) {
 // functia de desenare a tabelului
 function draw() {
   let table = document.querySelector("#idTable tbody");
-  //console.log(table);
+  console.log(table);
   let str = "";
   if (state.list.length > 0) {
     document.querySelector("#idTable").classList.remove("hideTableHead");
@@ -49,6 +49,7 @@ function draw() {
           <td style="witdh: auto" class="fontSize"> <button onclick="deleteContact(${idx})" class="buttonContact fontSize">Sterge</button></td>
         </tr>`;
       table.innerHTML = str;
+      console.log(table);
     }
   } else {
     document.querySelector("#idTable").classList.add("hideTableHead");
