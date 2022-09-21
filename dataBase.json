@@ -6,8 +6,20 @@
       },
 
       {
+        "nume":"Alexandra",
+        "nrTelefon":"1234567891"
+      },
+      {
         "nume":"Bolocan",
         "nrTelefon":"0722185954"
+      },
+      {
+        "nume":"Mihnea",
+        "nrTelefon":"0729455541"
+      },
+      {
+        "nume":"Andrei",
+        "nrTelefon":"0729400041"
       }
     ]
   }

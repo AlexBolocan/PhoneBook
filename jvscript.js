@@ -1,59 +1,62 @@
 // variabila de stocat info din aplicatie
 // tip obiect
 let state = {
-  list:[],
-  idxEdit:null,
+  list: [],
+  idxEdit: null,
   // obiect
- dataBaseUrl:
- "https://phonebook-1fef4-default-rtdb.europe-west1.firebasedatabase.app/",
+  dataBaseUrl:
+    "https://phonebook-1fef4-default-rtdb.europe-west1.firebasedatabase.app/list/",
 };
 
 // functia de adaugare contacte
-function addContact(event) {
+async function addContact(event) {
   event.preventDefault();
   let nume = document.querySelector('[name="nume"]').value.trim();
   let nrTelefon = document.querySelector('[name="nrTelefon"]').value.trim();
   console.log(nume);
-  //console.log(nrTelefon);
-  if (state.idxEdit === null) {
-    state.list.push({
-      nume: nume,
-      nrTelefon: nrTelefon,
-    });
-  } else {
-    state.list[state.idxEdit] = {
-      nume: nume,
-      nrTelefon: nrTelefon,
-    };
+  console.log(nrTelefon);
+  if (nume !== "" || nrTelefon !== "") {
+    if (state.idxEdit === null) {
+      let url = state.dataBaseUrl + ".json"; // variabila *url* = linku-ul bazei de date din firebase + varibila index
+      let response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify({ nume: nume, nrTelefon: nrTelefon }),
+      }); // variabila *reponse* = cererea catre baza de date care urmeaza a fi stearsa
+    } else {
+      let url = state.dataBaseUrl + state.idxEdit + ".json"; // variabila *url* = linku-ul bazei de date din firebase + varibila index
+      console.log(url);
+      let response = await fetch(url, {
+        method: "PUT",
+        body: JSON.stringify({ nume: nume, nrTelefon: nrTelefon }),
+      });
+    }
   }
   document.querySelector('[name="nume"]').value = "";
   document.querySelector('[name="nrTelefon"]').value = "";
-  draw();
-  sortAgenda();
+  await getData();
+  // sortAgenda();
 }
 
 // functia de desenare a tabelului
 function draw() {
   let table = document.querySelector("#idTable tbody");
-  console.log(table);
   let str = "";
-  if (state.list.length > 0) {
-    document.querySelector("#idTable").classList.remove("hideTableHead");
-    for (let idx = 0; idx < state.list.length; idx++) {
-      // for (let elem of state.list) {
-      let elem = state.list[idx];
-      str += `<tr>
+  document.querySelector("#idTable").classList.remove("hideTableHead");
+  for (let [i, elem] of Object.entries(state.list)) {
+    // for (let idx = 0; idx < state.list.length; idx++) {
+    // for (let elem of state.list) {
+    // let elem = state.list[idx];
+    console.log(elem);
+    if (elem === null) {
+      continue;
+    }
+    str += `<tr>
           <td style="width: 30%;" class="fontSize">${elem.nume}</td>
           <td style="width: 30%;" class="fontSize">${elem.nrTelefon}</td>
-          <td style="width: 20%;" class="fontSize"> <button onclick="editContact(${idx})" class="buttonContact fontSize">Modifica</button></td>
-          <td style="witdh: auto" class="fontSize"> <button onclick="deleteContact(${idx})" class="buttonContact fontSize">Sterge</button></td>
+          <td style="width: 20%;" class="fontSize"> <button onclick="editContact('${i}')" class="buttonContact fontSize">Modifica</button></td>
+          <td style="witdh: auto" class="fontSize"> <button onclick="deleteContact('${i}')" class="buttonContact fontSize">Sterge</button></td>
         </tr>`;
-      table.innerHTML = str;
-      console.log(table);
-    }
-  } else {
-    document.querySelector("#idTable").classList.add("hideTableHead");
-    return;
+    table.innerHTML = str;
   }
 }
 // functia de editare
@@ -65,12 +68,16 @@ function editContact(idx) {
 }
 
 // functia de stergere cu confirmare intotdeauna
-function deleteContact(idx) {
+async function deleteContact(idx) {
   if (
     confirm(`Esti sigur ca vrei sa stergi contactul "${state.list[idx].nume}"?`)
   ) {
-    state.list.splice(idx, 1);
-    draw();
+    // https://phonebook-1fef4-default-rtdb.europe-west1.firebasedatabase.app/2/.josn -> exemplu de preluare cu variabila index
+    let url = state.dataBaseUrl + idx + ".json"; // variabila *url* = linku-ul bazei de date din firebase + varibila index
+    let response = await fetch(url, {
+      method: "DELETE",
+    }); // variabila *reponse* = cererea catre baza de date care urmeaza a fi stearsa
+    await getData();
   }
 }
 function sortAgenda() {
@@ -90,10 +97,8 @@ function sortAgenda() {
 //functie pentru preluare din baza de data
 async function getData() {
   let url = state.dataBaseUrl + ".json"; // variabila *url* = linku-ul bazei de date din firebase
-  console.log(url)
   let response = await fetch(url); // variabila *reponse* = cererea catre baza de date
   let listResDb = await response.json(); // variabila *list* = continut bazei de date
-  console.log(listResDb); //
-  state = listResDb;
+  state.list = listResDb;
   draw();
 }
